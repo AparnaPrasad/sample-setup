@@ -1,54 +1,70 @@
 import React, { Component } from 'react';
-import "../app.scss";
+import './app.scss';
+import Loader from 'react-loader-spinner';
 import Api from '../../Utils/api';
-import {connect} from 'react-redux';
-import {fetchBikesNetwork} from '../../Actions/bikes';
+import { connect } from 'react-redux';
+import { fetchBikesNetwork } from '../../Actions/bikes';
 import DisplayGroupedBikeNetworks from '../DisplayGroupedBikeNetworks/DisplayGroupedBikeNetworks';
 import DropdownContainer from '../DropdownContainer/DropdownContainer';
-import {group_by} from '../../Utils/const';
+import { group_by } from '../../Utils/const';
 
 class App extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state={
+        this.state = {
             groupBy: group_by[0].key
         }
     }
 
     componentDidMount(){
-        this.props.fetchBikesNetwork();
+        const { fetchBikesNetwork } = this.props;
+        fetchBikesNetwork();
     }
 
-    dropDownChange(eventKey){
+    getBikeNetworkComponent() {
+        if (this.props.loading) {
+            return (<Loader
+                type='Ball-Triangle'
+                color='#00BFFF'
+                height='100'
+                width='100'
+            />);
+        }
+        return this.props.error ? <div>Error displaying data</div> : <DisplayGroupedBikeNetworks groupBy={this.state.groupBy} listOfItems={ this.state.groupBy === 'city' ? this.props.cityList : this.props.countryList }/>;
+
+    }
+
+    dropDownChange(eventKey) {
         this.setState({
-            groupBy: eventKey
-        })
+            groupBy: eventKey,
+        });
     }
-
 
     render() {
-       // const {cities} = this.props;
-        return (
+       return (
             <div>
-                <DropdownContainer groupBy={this.state.groupBy} dropDownChange={this.dropDownChange.bind(this)}/>
-                {/*TODO loader and error check*/}
-                <DisplayGroupedBikeNetworks groupBy={this.state.groupBy} listOfItems={this.state.groupBy==='city'?this.props.cityList:this.props.countryList}/>
+                <DropdownContainer
+                    groupBy={ this.state.groupBy }
+                    dropDownChange={ this.dropDownChange.bind(this) }/>
+                { /* TODO loader and error check */ }
+                {this.getBikeNetworkComponent()}
             </div>
         );
     }
 }
-function mapStateToProps({country, city}) {
+function mapStateToProps({ country, city, bikes }) {
     return {
         countryList: country.countryList,
-        cityList: city.cityList
-    }
-
+        cityList: city.cityList,
+        loading: bikes.loading,
+        error: bikes.error,
+    };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchBikesNetwork: () =>  dispatch(fetchBikesNetwork())
-    }
+        fetchBikesNetwork: () => dispatch(fetchBikesNetwork()),
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

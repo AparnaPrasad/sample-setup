@@ -1,4 +1,4 @@
-import {FETCH_BIKES_SUCCESS} from '../Utils/const';
+import {FETCH_BIKES_BEGIN, FETCH_BIKES_FAILURE, FETCH_BIKES_SUCCESS} from '../Utils/const';
 
 const initialState = {
     //bikesById: [],
@@ -14,10 +14,21 @@ export default function bikes(state = initialState, action){
 
     switch (type) {
         case FETCH_BIKES_SUCCESS:
-
             return{
                 ...state,
-                bikeList: payload
+                bikeList: payload,
+                loading:false
+            }
+        case FETCH_BIKES_BEGIN:
+            return {
+                ...state,
+                loading: true
+            }
+        case FETCH_BIKES_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: payload
             }
         default:
             return state;

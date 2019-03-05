@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: `http://api.citybik.es/v2/networks`
+    baseURL: `http://api.citybik.es`
 });
