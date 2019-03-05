@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import connect from "react-redux/es/connect/connect";
 import ListOfBikeNetworks from '../ListOfBikeNetworks/ListOfBikeNetworks';
+import {group_by} from '../../Utils/const';
 
 class DisplayGroupedBikeNetworks extends Component {
 

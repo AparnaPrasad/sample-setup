@@ -2,10 +2,11 @@ import Api from "../Utils/api";
 import {SET_BIKES_BY_CITIES, FETCH_BIKES_BEGIN, FETCH_BIKES_FAILURE, FETCH_BIKES_SUCCESS} from "../Utils/const";
 import {setBikesByCities} from './cities';
 import {setBikesByCountries} from './countries';
-import { normalize, schema } from 'normalizr';
+import {sample} from '../Utils/sample_response';
+//import { normalize, schema } from 'normalizr';
 
 // Define a users schema
-const bikesSchema = new schema.Entity('bikesByIds', {}, {idAttribute:'id'});
+//const bikesSchema = new schema.Entity('bikesByIds', {}, {idAttribute:'id'});
 //const countrySchema = new schema.Entity('countries',{}, {idAttribute:'country'} )
 
 
@@ -32,7 +33,7 @@ const bikesSchema = new schema.Entity('bikesByIds', {}, {idAttribute:'id'});
 
 
 export function fetchBikesNetwork(){
-    return (dispatch) => {
+    /*return (dispatch) => {
         dispatch(fetchBikesBegin());
         Api.get('/').then(response => {
             console.log(response);
@@ -49,6 +50,12 @@ export function fetchBikesNetwork(){
         }).catch(error=>{
             dispatch(fetchBikesFailure(error))
         })
+    }*/
+
+    return (dispatch) => {
+        dispatch(fetchBikesSuccess(sample.data.networks));
+        dispatch(setBikesByCities(sample.data.networks));
+        dispatch(setBikesByCountries(sample.data.networks));
     }
 
 }

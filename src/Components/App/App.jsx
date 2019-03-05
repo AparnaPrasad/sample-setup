@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import './app.scss';
+import "../app.scss";
 import Api from '../../Utils/api';
 import {connect} from 'react-redux';
 import {fetchBikesNetwork} from '../../Actions/bikes';
 import DisplayGroupedBikeNetworks from '../DisplayGroupedBikeNetworks/DisplayGroupedBikeNetworks';
 import DropdownContainer from '../DropdownContainer/DropdownContainer';
+import {group_by} from '../../Utils/const';
 
 class App extends Component {
     constructor(props){
         super(props)
         this.state={
-            groupBy:'country'
+            groupBy: group_by[0].key
         }
     }
 

@@ -1,5 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
+const mockStore = configureMockStore([thunk]);
 
 // Components
 import App from './App';
@@ -16,3 +20,10 @@ describe('WelcomeMessage Test Suite', () => {
         expect(wrapper.find('h1').exists()).toBe(true);
     });
 });
+
+/*it('should be called once', async () => {
+    const autoLogin = jest.fn();
+    const wrapper = shallow(<App store={mockStore()} autoLogin={autoLogin} />);
+    await wrapper.dive();
+    expect(autoLogin.mock.calls.length).toBe(1);
+})*/

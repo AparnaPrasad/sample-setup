@@ -1,16 +1,17 @@
 import Dropdown from "react-bootstrap/Dropdown";
 import React from "react";
+import {group_by} from '../../Utils/const';
 
 export default function DropdownContainer(props){
     return (<Dropdown>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
-            {props.groupBy}
+            {group_by.find(group=>(group.key===props.groupBy)).value}
         </Dropdown.Toggle>
 
-        <Dropdown.Menu> /*TODO get constant from constant file and loop*/
-            <Dropdown.Item eventKey="country" onSelect={(eventKey)=>{props.dropDownChange(eventKey)}}>Country</Dropdown.Item>
-            <Dropdown.Item eventKey="city" onSelect={(eventKey)=>{props.dropDownChange(eventKey)}}>City</Dropdown.Item>
-            <Dropdown.Item eventKey="both" onSelect={(eventKey)=>{props.dropDownChange(eventKey)}}>Both</Dropdown.Item>
+        <Dropdown.Menu> 
+            {group_by.map((group, index)=>
+                <Dropdown.Item key={index} eventKey={group.key} onSelect={(eventKey)=>{props.dropDownChange(eventKey)}}>{group.value}</Dropdown.Item>
+            )}
         </Dropdown.Menu>
     </Dropdown>)
 }

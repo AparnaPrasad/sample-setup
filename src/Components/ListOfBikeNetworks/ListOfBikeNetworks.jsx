@@ -7,18 +7,7 @@ import Api from "../../Utils/api";
 
 function ListOfBikeNetworks(props) {
         const [show, setShow] = useState(false);
-        const [data, setData] = useState({ hits: [] });
-
-        useEffect(() => {
-            /*const result = await axios(
-            'http://hn.algolia.com/api/v1/search?query=redux',
-            );*/
-
-            Api.get('/').then(response => {
-                setData(response.data);
-            })
-
-        });
+        
 
         return (<div>
 
@@ -36,7 +25,7 @@ function ListOfBikeNetworks(props) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <ListBikes items={props.items} setShow={setShow}/>
+            <ListBikes items={props.items} setShow={setShow} />
         </div>)
 
 }
